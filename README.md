@@ -18,14 +18,14 @@ import tryCatch from "try-catch";
 
 const [data, err] = await tryCatch(fetch("https://example.com"));
 
-// data is Response | null 
+// data is Response | null
 if (err) {
 	console.error("Error:", err);
 	return;
 }
 
-// data is Response now, you know 100% sure its not null
-console.log(data.text());
+// data is Response now, you know 100% sure its not null, ? is ok since we know its not null, this is a typescript issue
+console.log(data?.text());
 ```
 
 ## Development
