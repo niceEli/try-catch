@@ -1,0 +1,52 @@
+{
+	"name": "@niceeli/try-catch",
+	"version": "1.0.8",
+	"description": "A Go Like try-catch System",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/niceEli/try-catch.git"
+	},
+	"license": "MIT",
+	"author": "niceEli",
+	"type": "module",
+	"main": "lib/index.js",
+	"files": [
+		"LICENSE.md",
+		"README.md",
+		"lib/",
+		"package.json"
+	],
+	"scripts": {
+		"dev": "npm run test -- --ui",
+		"build": "tsup",
+		"start": "npm run build && node lib/runner.js",
+		"format": "prettier .",
+		"lint": "eslint . --max-warnings 0",
+		"tsc": "tsc",
+		"test": "vitest src",
+		"docs-build": "typedoc src/index.ts --out docs",
+		"docs-serve": "python -m http.server 8080 --directory docs",
+		"npm:publish": "npm publish --access public",
+		"bun:publish": "bun publish --access public"
+	},
+	"lint-staged": {
+		"*": "prettier --ignore-unknown --write"
+	},
+	"devDependencies": {
+		"@eslint/js": "9.22.0",
+		"@types/node": "22.13.10",
+		"@vitest/ui": "^3.1.4",
+		"axios": "^1.9.0",
+		"eslint": "9.22.0",
+		"prettier": "3.5.3",
+		"tsup": "8.4.0",
+		"typedoc": "^0.28.4",
+		"typescript": "5.8.2",
+		"typescript-eslint": "8.26.1",
+		"vitest": "^3.1.4"
+	},
+	"packageManager": "pnpm@10.4.0",
+	"engines": {
+		"node": ">=18.3.0"
+	}
+}

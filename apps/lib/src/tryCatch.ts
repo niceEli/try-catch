@@ -1,4 +1,4 @@
-import { TryCatchResult } from "./types.js";
+import { SafeResult } from "./types.js";
 // Based on https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b -- made more like the fireship version now
 
 /**
@@ -8,21 +8,21 @@ import { TryCatchResult } from "./types.js";
  * I know, I know, templates are hard for you vibe coders, but think of it like this:
  * ```ts
  * const a = () => 1; // lambda function that returns a number (1)
- * await tryCatch(a());
+ * await safe(a());
  * ```
  * The template (`ReturnType`) is just a `number` since `a` returns a number.
  *
  * @param {Promise<ReturnType>} promise The promise to be executed.
- * @returns {Promise<TryCatchResult<ReturnType>>} A promise that resolves to a tuple representing the outcome of the operation.
+ * @returns {Promise<SafeResult<ReturnType>>} A promise that resolves to a tuple representing the outcome of the operation.
  *   - On success: `[value: ReturnType, error: null, success: true]` - The resolved value of the promise, a null error, and a success flag set to true.
  *   - On failure: `[value: null, error: Error, success: false]` - A null value, the error that was caught, and a success flag set to false.
  *
  * @example
  * ```ts
  * // fetch example
- * import tryCatch from "@niceEli/try-catch";
+ * import safe from "@niceEli/try-catch";
  *
- * const [result, error, success] = await tryCatch(fetch("https://example.com"));
+ * const [result, error, success] = await safe(fetch("https://example.com"));
  *
  * if (error) { // or you can do: if (!success)
  *   console.error(error); // If this ran, Output: "URL not found" or something similar
@@ -31,9 +31,9 @@ import { TryCatchResult } from "./types.js";
  * console.log(result); // Output: "Result: Response { ... }"
  * ```
  */
-export async function tryCatch<ReturnType>(
+export async function safe<ReturnType>(
 	promise: Promise<ReturnType>,
-): Promise<TryCatchResult<ReturnType>> {
+): Promise<SafeResult<ReturnType>> {
 	try {
 		// Await for promise to resolve
 		const value = await promise;

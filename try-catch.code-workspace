@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+    {
+      "name": "try-catch library",
+      "path": "./apps/lib",
+    },
+  ],
+  "settings": {},
+}

@@ -1,11 +1,11 @@
 ﻿import { expect, test } from "vitest";
-import tryCatch from "./index.js";
+import safe from "./index.js";
 import axios from "axios";
 
 test("small-fetch", async () => {
 	const url = "https://example.com";
 
-	const [data, error] = await tryCatch(fetch(url));
+	const [data, error] = await safe(fetch(url));
 
 	expect(data).toBeTruthy();
 	expect(data).toBeInstanceOf(Response);
@@ -17,7 +17,7 @@ test("small-fetch", async () => {
 test("large-xhr", async () => {
 	const url = "https://www.googleapis.com/discovery/v1/apis";
 
-	const [data, error] = await tryCatch(axios(url));
+	const [data, error] = await safe(axios(url));
 
 	expect(data).toBeTruthy();
 	console.log("non null data (Response type) ->", data?.status);
@@ -27,7 +27,7 @@ test("large-xhr", async () => {
 
 test("accepted-promise", async () => {
 	const successPromise = Promise.resolve("Hello World");
-	const [data, error] = await tryCatch(successPromise);
+	const [data, error] = await safe(successPromise);
 
 	expect(data).toBe("Hello World");
 	console.log("non null data (string type) ->", data);
@@ -37,7 +37,7 @@ test("accepted-promise", async () => {
 
 test("thrown-error", async () => {
 	const errorPromise = Promise.reject(new Error("Something went wrong"));
-	const [data, error] = await tryCatch(errorPromise);
+	const [data, error] = await safe(errorPromise);
 
 	expect(data).toBeNull();
 	console.log("null data ->", data);
@@ -50,7 +50,7 @@ test("rejected-promise", async () => {
 	// supress error since we are testing the error handling
 	// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 	const failPromise = Promise.reject("string error");
-	const [data, error] = await tryCatch(failPromise);
+	const [data, error] = await safe(failPromise);
 
 	expect(data).toBeNull();
 	console.log("null data ->", data);
