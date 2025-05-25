@@ -6,7 +6,7 @@ test("small-fetch", async () => {
 	const url = "https://example.com";
 
 	const [data, error] = await tryCatch(fetch(url));
-
+	
 	expect(data).toBeTruthy();
 	expect(data).toBeInstanceOf(Response);
 	console.log("non null data (Response type) ->", data?.status);

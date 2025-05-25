@@ -16,14 +16,16 @@ bun i try-catch
 ```ts
 import tryCatch from "try-catch";
 
-const [data, err] = await tryCatch(greet("fetch"));
+const [data, err] = await tryCatch(fetch("https://example.com"));
 
+// data is Response | null 
 if (err) {
 	console.error("Error:", err);
 	return;
 }
 
-// use data here
+// data is Response now, you know 100% sure its not null
+console.log(data.text());
 ```
 
 ## Development
