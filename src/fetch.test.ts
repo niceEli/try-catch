@@ -42,8 +42,8 @@ test("rejected-promise", async () => {
 	expect(data).toBeNull();
 	console.log("null data ->", data);
 	expect(error).toBeInstanceOf(Error);
-	expect((error as Error).message).toBe("Something went wrong");
-	console.log("non null error (Error type) ->", (error as Error).message);
+	expect(error?.message).toBe("Something went wrong");
+	console.log("non null error (Error type) ->", error?.message);
 });
 
 test("thrown-error", async () => {
@@ -54,6 +54,8 @@ test("thrown-error", async () => {
 
 	expect(data).toBeNull();
 	console.log("null data ->", data);
-	expect(error).toBe("string error");
-	console.log("non null error (String type) ->", error);
+	expect(error).toStrictEqual(new Error("string error"));
+	expect(error?.message).toBe("string error");
+	expect(error).toBeInstanceOf(Error);
+	console.log("non null error (String type) ->", error?.message);
 });

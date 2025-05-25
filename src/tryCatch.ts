@@ -1,19 +1,14 @@
-// Based on https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b
+// Based on https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b -- made more like the fireship version now
 
-import { Failure, Operation, Output, Success } from "./types.js";
-
-const onSuccess = <T>(value: T): Success<T> => [value, null];
-const onFailure = <E>(error: E): Failure<E> => [null, error];
-
-export const tryCatch = <T, E>(operation: Operation<T>): Output<T, E> => {
-	if (operation instanceof Promise) {
-		return operation.then(onSuccess).catch(onFailure);
-	}
-
+export const tryCatch = async <T>(
+	promise: Promise<T>,
+): Promise<[T, null] | [null, Error]> => {
 	try {
-		const value = operation();
-		return [value, null] as Success<T>;
+		const value = await promise;
+		return [value, null];
 	} catch (error) {
-		return [null, error as E] as Failure<E>;
+		if (error instanceof Error) return [null, error];
+
+		return [null, new Error(String(error))];
 	}
 };
