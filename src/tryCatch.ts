@@ -8,6 +8,8 @@ export const tryCatch = async <T>(
 		return [value, null];
 	} catch (error) {
 		if (error instanceof Error) return [null, error];
+		if (error instanceof Object)
+			return [null, new Error(JSON.stringify(error))];
 
 		return [null, new Error(String(error))];
 	}
