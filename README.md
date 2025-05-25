@@ -14,7 +14,7 @@ bun i try-catch
 ```
 
 ```ts
-import tryCatch from "try-catch";
+import tryCatch from "@niceeli/try-catch";
 
 const [data, err] = await tryCatch(fetch("https://example.com"));
 
