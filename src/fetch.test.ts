@@ -35,7 +35,7 @@ test("accepted-promise", async () => {
 	console.log("null error ->", error);
 });
 
-test("rejected-promise", async () => {
+test("thrown-error", async () => {
 	const errorPromise = Promise.reject(new Error("Something went wrong"));
 	const [data, error] = await tryCatch(errorPromise);
 
@@ -46,7 +46,7 @@ test("rejected-promise", async () => {
 	console.log("non null error (Error type) ->", error?.message);
 });
 
-test("thrown-error", async () => {
+test("rejected-promise", async () => {
 	// supress error since we are testing the error handling
 	// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 	const failPromise = Promise.reject("string error");
