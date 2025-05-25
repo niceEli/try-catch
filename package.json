@@ -6,7 +6,6 @@
 		"type": "git",
 		"url": "git+https://github.com/niceEli/try-catch.git"
 	},
-	"private": "false",
 	"license": "MIT",
 	"author": "niceEli",
 	"type": "module",
