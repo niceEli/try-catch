@@ -1,5 +1,5 @@
 ﻿import { expect, test } from "vitest";
-import safe, { ErrorTypes } from "./index.js";
+import { ErrorTypes, safe, safeSync } from "./index.js";
 import axios from "axios";
 
 test("small-fetch", async () => {
@@ -82,5 +82,36 @@ test("rejected-object-promise", async () => {
 	expect(error).toBeInstanceOf(Error);
 	console.log("non null error (String type) ->", error?.message);
 	expect(type).toBe(ErrorTypes.OBJECTERROR);
+	console.log("error type ->", type);
+});
+
+test("sync-function", () => {
+	const syncFunction = (a: number, b: number): number => a + b;
+	const [data, error, type] = safeSync(syncFunction, 1, 2);
+
+	expect(data).toBe(3);
+	console.log("non null data (number type) ->", data);
+	expect(error).toBeNull();
+	console.log("null error ->", error);
+	expect(type).toBe(false);
+	console.log("error type ->", type);
+});
+
+test("sync-function-throwing-error", () => {
+	const syncFunction = (a: number, b: number): number => {
+		if (a < 0 || b < 0) {
+			throw new Error("Negative numbers are not allowed");
+		}
+		return a + b;
+	};
+
+	const [data, error, type] = safeSync(syncFunction, -1, 2);
+
+	expect(data).toBeNull();
+	console.log("null data ->", data);
+	expect(error).toBeInstanceOf(Error);
+	expect(error?.message).toBe("Negative numbers are not allowed");
+	console.log("non null error (Error type) ->", error?.message);
+	expect(type).toBe(ErrorTypes.ERROR);
 	console.log("error type ->", type);
 });
