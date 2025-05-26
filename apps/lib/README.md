@@ -16,11 +16,11 @@ bun i try-catch
 ```ts
 import safe from "@niceeli/try-catch";
 
-const [data, err] = await safe(fetch("https://example.com"));
+const [data, err, type] = await safe(fetch("https://example.com"));
 
 // data is Response | null
 if (err) {
-	console.error("Error:", err);
+	console.error(`Error: ${err} (${type})`);
 	return;
 }
 

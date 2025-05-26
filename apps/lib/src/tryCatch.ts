@@ -1,4 +1,4 @@
-import { SafeResult } from "./types.js";
+import { ErrorTypes, SafeResult } from "./types.js";
 // Based on https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b -- made more like the fireship version now
 
 /**
@@ -42,18 +42,23 @@ export async function safe<ReturnType>(
 		return [value, null, true];
 	} catch (error) {
 		let returnedError: Error;
+		let errorType: ErrorTypes = ErrorTypes.UNKNOWN;
 
-		if (error instanceof Error)
+		if (error instanceof Error) {
 			// When its an Error, just return it
 			returnedError = error;
-		else if (error instanceof Object)
+			errorType = ErrorTypes.ERROR;
+		} else if (error instanceof Object) {
 			// When its an object, stringify it
 			returnedError = new Error(JSON.stringify(error));
-		else
-			// When its a string, turn it into an Error
+			errorType = ErrorTypes.OBJECTERROR;
+		} else {
+			// When its a primitive, turn it into an Error
 			returnedError = new Error(String(error));
+			errorType = ErrorTypes.PRIMITIVEERROR;
+		}
 
 		// Return null as the data since we have no data, the error, and a failure flag
-		return [null, returnedError, false];
+		return [null, returnedError, errorType];
 	}
 }

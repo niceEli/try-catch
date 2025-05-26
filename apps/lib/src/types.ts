@@ -27,10 +27,24 @@ export type SuccessResult<ReturnType> = [ReturnType, null, true];
  * success === false;
  * ```
  */
-export type FailureResult = [null, Error, false];
+export type FailureResult = [null, Error, ErrorTypes];
 
 /**
  * Represents the result of the promise that the safe operation ran. It can either be a successful result containing a value or a failure result indicating an error.
  * @template ReturnType The type of the value returned in case of success.
  */
 export type SafeResult<ReturnType> = SuccessResult<ReturnType> | FailureResult;
+
+/**
+ * Enum representing different types of errors that can occur during the execution of a promise.
+ * - `ERROR`: A standard error type, used for when the Error is the Error type.
+ * - `OBJECTERROR`: An error that was thrown as an object, which is turned into the Error type before being returned.
+ * - `PRIMITIVEERROR`: An error that was thrown as a primitive (string, number, boolean), which is stringified and turned into the Error type before being returned.
+ * - `UNKNOWN`: Fallback Error type.
+ */
+export enum ErrorTypes {
+	UNKNOWN = "unknown",
+	ERROR = "error",
+	OBJECTERROR = "objectError",
+	PRIMITIVEERROR = "primitiveError",
+}
