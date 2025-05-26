@@ -5,14 +5,14 @@
  * ```ts
  * const myPromise = Promise.resolve("Success!");
  *
- * const [result, error, success] = await safe(myPromise);
+ * const [result, error, failure] = await safe(myPromise);
  *
  * result === "Success!";
  * error === null;
- * success === true;
+ * failure === false;
  * ```
  */
-export type SuccessResult<ReturnType> = [ReturnType, null, true];
+export type SuccessResult<ReturnType> = [ReturnType, null, false];
 
 /**
  * Represents a failure result with a null value, an error, and a false boolean indicating failure.
@@ -20,11 +20,11 @@ export type SuccessResult<ReturnType> = [ReturnType, null, true];
  * ```ts
  * const myPromise = Promise.reject("Failure.");
  *
- * const [result, error, success] = await safe(myPromise);
+ * const [result, error, failure] = await safe(myPromise);
  *
  * result === null;
  * error === Error { "Failure." };
- * success === false;
+ * failure === ErrorTypes.PRIMITIVEERROR;
  * ```
  */
 export type FailureResult = [null, Error, ErrorTypes];

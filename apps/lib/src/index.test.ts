@@ -12,7 +12,7 @@ test("small-fetch", async () => {
 	console.log("non null data (Response type) ->", data?.status);
 	expect(error).toBeNull();
 	console.log("null error ->", error);
-	expect(type).toBe(true);
+	expect(type).toBe(false);
 	console.log("error type ->", type);
 });
 
@@ -25,7 +25,7 @@ test("large-xhr", async () => {
 	console.log("non null data (Response type) ->", data?.status);
 	expect(error).toBeNull();
 	console.log("null error ->", error);
-	expect(type).toBe(true);
+	expect(type).toBe(false);
 	console.log("error type ->", type);
 });
 
@@ -37,7 +37,7 @@ test("accepted-promise", async () => {
 	console.log("non null data (string type) ->", data);
 	expect(error).toBeNull();
 	console.log("null error ->", error);
-	expect(type).toBe(true);
+	expect(type).toBe(false);
 	console.log("error type ->", type);
 });
 

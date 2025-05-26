@@ -14,18 +14,18 @@ import { ErrorTypes, SafeResult } from "./types.js";
  *
  * @param {Promise<ReturnType>} promise The promise to be executed.
  * @returns {Promise<SafeResult<ReturnType>>} A promise that resolves to a tuple representing the outcome of the operation.
- *   - On success: `[value: ReturnType, error: null, success: true]` - The resolved value of the promise, a null error, and a success flag set to true.
- *   - On failure: `[value: null, error: Error, success: false]` - A null value, the error that was caught, and a success flag set to false.
+ *   - On success: `[value: ReturnType, error: null, failure: false]` - The resolved value of the promise, a null error, and the failure flag set to false.
+ *   - On failure: `[value: null, error: Error, failure: ErrorTypes]` - A null value, the error that was caught, and the failure flag set to false.
  *
  * @example
  * ```ts
  * // fetch example
  * import safe from "@niceEli/try-catch";
  *
- * const [result, error, success] = await safe(fetch("https://example.com"));
+ * const [result, error, errorType] = await safe(fetch("https://example.com"));
  *
- * if (error) { // or you can do: if (!success)
- *   console.error(error); // If this ran, Output: "URL not found" or something similar
+ * if (error) { // or you can do: if (errorType)... since errorType is truthy when there is an error
+ *   console.error(error, errorType); // If this ran, Output: "URL not found" or something similar
  *   return;
  * }
  * console.log(result); // Output: "Result: Response { ... }"
@@ -39,7 +39,7 @@ export async function safe<ReturnType>(
 		const value = await promise;
 		// Assuming you on this line the promise was successful
 		// now return the data, with no error, and a success flag
-		return [value, null, true];
+		return [value, null, false];
 	} catch (error) {
 		let returnedError: Error;
 		let errorType: ErrorTypes = ErrorTypes.UNKNOWN;
@@ -58,7 +58,7 @@ export async function safe<ReturnType>(
 			errorType = ErrorTypes.PRIMITIVEERROR;
 		}
 
-		// Return null as the data since we have no data, the error, and a failure flag
+		// Return null as the data since we have no data, the error, and the failure flag
 		return [null, returnedError, errorType];
 	}
 }
