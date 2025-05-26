@@ -7,7 +7,7 @@ import { ErrorTypes, SafeResult } from "./types.js";
  * @template ReturnType The type of the promise's resolved value.
  * I know, I know, templates are hard for you vibe coders, but think of it like this:
  * ```ts
- * const a = () => 1; // lambda function that returns a number (1)
+ * const a = async () => 1; // lambda promise that returns a number (1)
  * await safe(a());
  * ```
  * The template (`ReturnType`) is just a `number` since `a` returns a number.
@@ -15,7 +15,7 @@ import { ErrorTypes, SafeResult } from "./types.js";
  * @param {Promise<ReturnType>} promise The promise to be executed.
  * @returns {Promise<SafeResult<ReturnType>>} A promise that resolves to a tuple representing the outcome of the operation.
  *   - On success: `[value: ReturnType, error: null, failure: false]` - The resolved value of the promise, a null error, and the failure flag set to false.
- *   - On failure: `[value: null, error: Error, failure: ErrorTypes]` - A null value, the error that was caught, and the failure flag set to false.
+ *   - On failure: `[value: null, error: Error, failure: ErrorTypes]` - A null value, the error that was caught, and the failure flag set to an ErrorType.
  *
  * @example
  * ```ts
@@ -30,6 +30,9 @@ import { ErrorTypes, SafeResult } from "./types.js";
  * }
  * console.log(result); // Output: "Result: Response { ... }"
  * ```
+ *
+ * @remarks
+ * Check out https://gh.niceeli.tech/try-catch/ for more information, and documentation.
  */
 export async function safe<ReturnType>(
 	promise: Promise<ReturnType>,

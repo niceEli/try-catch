@@ -10,7 +10,7 @@
 ## Usage
 
 ```shell
-bun i try-catch
+bun i @niceeli/try-catch
 ```
 
 ```ts
